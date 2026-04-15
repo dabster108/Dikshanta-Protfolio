@@ -2,7 +2,6 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Code, Database, Globe, Smartphone, Cloud, Palette } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-import ParticlesBackground from "../ParticlesBackground";
 
 const SkillsSection = () => {
   const { elementRef: sectionRef, isVisible: sectionVisible } = useScrollAnimation({ threshold: 0.2 });
@@ -91,8 +90,7 @@ const SkillsSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} id="skills" className="py-20 bg-background relative overflow-hidden">
-      <ParticlesBackground />
+    <section ref={sectionRef} id="skills" data-scroll-section className="py-20 bg-background relative overflow-hidden">
       {/* Background Decorative Icons */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-16 left-16 w-14 h-14 rounded-full bg-primary/8 flex items-center justify-center animate-float">
@@ -125,7 +123,7 @@ const SkillsSection = () => {
             {skillCategories.map((category, index) => (
               <Card 
                 key={category.title} 
-        className={`p-4 sm:p-6 card-shadow transition-all duration-1000 hover:card-shadow-hover hover:scale-105 group hover-lift ${
+        className={`p-4 sm:p-6 card-shadow transition-all duration-1000 hover:card-shadow-hover hover:scale-105 group hover-lift card-tilt ${
                   gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
                 }`}
                 style={{ transitionDelay: `${300 + index * 150}ms` }}

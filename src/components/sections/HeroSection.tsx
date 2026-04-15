@@ -1,16 +1,33 @@
 import { Button } from "@/components/ui/button";
-import { ArrowDown, Download, Github, Linkedin, Mail, Twitter } from "lucide-react";
-import { useState, useEffect } from "react";
-import ParticlesBackground from "../ParticlesBackground";
+import {
+  ArrowDown,
+  Download,
+  Github,
+  Linkedin,
+  Mail,
+  Twitter,
+} from "lucide-react";
+import { lazy, Suspense, useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { useScrollContext } from "@/contexts/ScrollContext";
 
-// New component for the text animation
-const AnimatedText = ({ phrases, speed = 100, delay = 1500 }) => {
+interface AnimatedTextProps {
+  phrases: string[];
+  speed?: number;
+  delay?: number;
+}
+
+const AnimatedText = ({
+  phrases,
+  speed = 100,
+  delay = 1500,
+}: AnimatedTextProps) => {
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const [currentText, setCurrentText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    let timer;
+    let timer: ReturnType<typeof setTimeout>;
     const currentPhrase = phrases[currentPhraseIndex];
 
     const handleType = () => {
@@ -25,7 +42,9 @@ const AnimatedText = ({ phrases, speed = 100, delay = 1500 }) => {
         setCurrentText(currentPhrase.substring(0, currentText.length - 1));
         if (currentText === "") {
           setIsDeleting(false);
-          setCurrentPhraseIndex((prevIndex) => (prevIndex + 1) % phrases.length);
+          setCurrentPhraseIndex(
+            (prevIndex) => (prevIndex + 1) % phrases.length,
+          );
         }
       }
       return () => clearTimeout(timer);
@@ -45,76 +64,110 @@ const AnimatedText = ({ phrases, speed = 100, delay = 1500 }) => {
   );
 };
 
-const HeroSection = () => {
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+const ThreeHeroCanvas = lazy(() =>
+  import("@/components/effects/ThreeHeroCanvas").catch(() => ({
+    default: () => null,
+  })),
+);
 
-  const animatedPhrases = [
-    "AI/ML Enthusiast",
-    "Exploring the Future of AI"
-  ];
+interface HeroSectionProps {
+  scrollY?: number;
+}
+
+const HeroSection = ({ scrollY = 0 }: HeroSectionProps) => {
+  const { scrollToSection } = useScrollContext();
+
+  const animatedPhrases = ["AI/ML Enthusiast", "Exploring the Future of AI"];
 
   return (
     <section
       id="hero"
+      data-scroll-section
       className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-background via-background to-accent/20 px-4 sm:px-6 lg:px-8"
     >
-      <ParticlesBackground />
+      <Suspense fallback={null}>
+        <ThreeHeroCanvas scrollY={scrollY} />
+      </Suspense>
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary rounded-full mix-blend-multiply filter blur-xl animate-float"></div>
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-primary-glow rounded-full mix-blend-multiply filter blur-xl animate-float" style={{ animationDelay: "1s" }}></div>
+        <div
+          className="absolute top-1/3 right-1/4 w-96 h-96 bg-primary-glow rounded-full mix-blend-multiply filter blur-xl animate-float"
+          style={{ animationDelay: "1s" }}
+        ></div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+      <motion.div
+        className="container mx-auto px-4 sm:px-6 relative z-10"
+        style={{ y: scrollY * 0.08 }}
+      >
         <div className="max-w-3xl sm:max-w-4xl mx-auto text-center">
           {/* Main Content */}
-          <div className="animate-fade-in">
-            <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-              <span className="animate-text-shimmer">
-                Dikshanta Chapagain
-              </span>
-            </h1>
-            
-            <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-4 animate-slide-up" style={{ animationDelay: "0.2s" }}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.85 }}
+          >
+            <motion.h1
+              initial={{ opacity: 0, y: 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75, delay: 0.1 }}
+              className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+            >
+              <span className="animate-text-shimmer">Dikshanta Chapagain</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="text-base sm:text-lg md:text-xl text-muted-foreground mb-4"
+            >
               <AnimatedText phrases={animatedPhrases} />
-            </p>
-            
-            <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-xl sm:max-w-2xl mx-auto mb-8 animate-slide-up" style={{ animationDelay: "0.4s" }}>
-              I craft intelligent solutions that blend cutting-edge AI technology with innovative design. 
-              Passionate about creating AI-powered experiences that shape the future.
-            </p>
-          </div>
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.35 }}
+              className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-xl sm:max-w-2xl mx-auto mb-8"
+            >
+              I craft intelligent solutions that blend cutting-edge AI
+              technology with innovative design. Passionate about creating
+              AI-powered experiences that shape the future.
+            </motion.p>
+          </motion.div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-slide-up" style={{ animationDelay: "0.6s" }}>
+          <motion.div
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.45 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
+          >
             <Button
               onClick={() => scrollToSection("projects")}
-              className="hero-gradient hero-gradient-hover text-primary-foreground px-8 py-3 text-lg transition-smooth hover:scale-105 hover:glow-shadow animate-glow"
+              className="hero-gradient hero-gradient-hover interactive-button text-primary-foreground px-8 py-3 text-lg transition-smooth hover:scale-105 hover:glow-shadow animate-glow"
             >
               View My Work
             </Button>
-            
+
             <Button
               variant="outline"
-              className="px-8 py-3 text-lg transition-smooth hover:scale-105 hover:bg-primary hover:text-primary-foreground"
+              className="px-8 py-3 text-lg transition-smooth interactive-button hover:scale-105 hover:bg-primary hover:text-primary-foreground"
               onClick={() => {
-                const cvPath = '/cv/Dikshanta_Chapgain_Cv.pdf';
+                const cvPath = "/cv/DIKSHANTA_CHAPAGAIN_RESUME.pdf";
                 const downloadCV = () => {
-                  const link = document.createElement('a');
+                  const link = document.createElement("a");
                   link.href = cvPath;
-                  link.download = 'Dikshanta_Chapagain_CV.pdf';
-                  link.style.display = 'none';
+                  link.download = "DIKSHANTA_CHAPAGAIN_RESUME.pdf";
+                  link.style.display = "none";
                   document.body.appendChild(link);
                   link.click();
                   document.body.removeChild(link);
                 };
                 const openCV = () => {
-                  const newWindow = window.open('', '_blank');
+                  const newWindow = window.open("", "_blank");
                   if (newWindow) {
                     newWindow.document.write(`
                       <html>
@@ -127,7 +180,7 @@ const HeroSection = () => {
                         </head>
                         <body>
                           <iframe src="${cvPath}" type="application/pdf">
-                            <p>Your browser doesn't support PDFs. <a href="${cvPath}" download="Dikshanta_Chapagain_CV.pdf">Download the PDF</a>.</p>
+                            <p>Your browser doesn't support PDFs. <a href="${cvPath}" download="DIKSHANTA_CHAPAGAIN_RESUME.pdf">Download the PDF</a>.</p>
                           </iframe>
                         </body>
                       </html>
@@ -140,7 +193,7 @@ const HeroSection = () => {
                 try {
                   downloadCV();
                 } catch (error) {
-                  console.log('Download failed, opening in new window');
+                  console.log("Download failed, opening in new window");
                   openCV();
                 }
               }}
@@ -148,31 +201,76 @@ const HeroSection = () => {
               <Download className="mr-2 h-5 w-5" />
               Download CV
             </Button>
-          </div>
+          </motion.div>
 
           {/* Social Links */}
-          <div className="flex items-center justify-center space-x-4 sm:space-x-6 mb-16 animate-slide-up" style={{ animationDelay: "0.8s" }}>
-            <Button variant="ghost" size="icon" asChild className="hover:scale-110 transition-spring hover:text-primary">
-              <a href="https://github.com/dabster108" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.55 }}
+            className="flex items-center justify-center space-x-4 sm:space-x-6 mb-16"
+          >
+            <Button
+              variant="ghost"
+              size="icon"
+              asChild
+              className="hover:scale-110 transition-spring hover:text-primary"
+            >
+              <a
+                href="https://github.com/dabster108"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+              >
                 <Github className="h-6 w-6" />
               </a>
             </Button>
-            <Button variant="ghost" size="icon" asChild className="hover:scale-110 transition-spring hover:text-primary">
-              <a href="https://www.linkedin.com/in/dikshantachapagain/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <Button
+              variant="ghost"
+              size="icon"
+              asChild
+              className="hover:scale-110 transition-spring hover:text-primary"
+            >
+              <a
+                href="https://www.linkedin.com/in/dikshantachapagain/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+              >
                 <Linkedin className="h-6 w-6" />
               </a>
             </Button>
-            <Button variant="ghost" size="icon" asChild className="hover:scale-110 transition-spring hover:text-primary">
-              <a href="https://x.com/_savage108" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+            <Button
+              variant="ghost"
+              size="icon"
+              asChild
+              className="hover:scale-110 transition-spring hover:text-primary"
+            >
+              <a
+                href="https://x.com/_savage108"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Twitter"
+              >
                 <Twitter className="h-6 w-6" />
               </a>
             </Button>
-            <Button variant="ghost" size="icon" asChild className="hover:scale-110 transition-spring hover:text-primary">
-              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=dikshanta108@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email">
+            <Button
+              variant="ghost"
+              size="icon"
+              asChild
+              className="hover:scale-110 transition-spring hover:text-primary"
+            >
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=dikshanta108@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Email"
+              >
                 <Mail className="h-6 w-6" />
               </a>
             </Button>
-          </div>
+          </motion.div>
 
           {/* Scroll Indicator */}
           <button
@@ -183,7 +281,7 @@ const HeroSection = () => {
             <ArrowDown className="h-6 w-6 text-muted-foreground" />
           </button>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

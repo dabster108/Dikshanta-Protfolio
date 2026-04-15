@@ -79,7 +79,7 @@ export default function ContactSection(): JSX.Element {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-background">
+    <section id="contact" data-scroll-section className="py-20 bg-background">
       <div className="container mx-auto px-6">
         <div className="max-w-6xl mx-auto">
           <div ref={headerRef} className="text-center mb-16">
@@ -89,7 +89,7 @@ export default function ContactSection(): JSX.Element {
 
             <div ref={gridRef} className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Left: Form */}
-      <div className={`p-6 sm:p-8 card-shadow hover:card-shadow-hover transition-all duration-1000 hover:scale-105 rounded-lg border-2 border-primary ${visibleItems[0] ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`} style={{ transitionDelay: visibleItems[0] ? '0ms' : undefined }}>
+      <div className={`p-6 sm:p-8 card-shadow hover:card-shadow-hover transition-all duration-1000 hover:scale-105 rounded-lg border-2 border-primary card-tilt ${visibleItems[0] ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`} style={{ transitionDelay: visibleItems[0] ? '0ms' : undefined }}>
               <h3 className="font-heading text-2xl font-semibold mb-6">Send a Message</h3>
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

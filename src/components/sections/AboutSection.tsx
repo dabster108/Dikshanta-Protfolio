@@ -16,7 +16,7 @@ const AboutSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} id="about" className="py-20 bg-accent/20 relative overflow-hidden">
+    <section ref={sectionRef} id="about" data-scroll-section className="py-20 bg-accent/20 relative overflow-hidden">
       {/* Background Decorative Icons */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-10 right-10 w-12 h-12 rounded-full bg-primary/5 flex items-center justify-center animate-float">
@@ -49,7 +49,7 @@ const AboutSection = () => {
       <div ref={imageRef} className={`relative group transition-all duration-1000 delay-300 ${
               imageVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
             }`}>
-              <Card className="p-8 card-shadow transition-smooth hover:card-shadow-hover overflow-hidden hover:scale-105">
+              <Card className="p-8 card-shadow transition-smooth hover:card-shadow-hover overflow-hidden hover:scale-105 card-tilt">
                 <div className="relative aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-primary/10 to-primary-glow/10">
                   <img
                     src="/images/me.jpeg"

@@ -2,10 +2,13 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import { useScrollContext } from "@/contexts/ScrollContext";
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { scrollToSection } = useScrollContext();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,12 +19,9 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsMobileMenuOpen(false);
-    }
+  const handleSectionScroll = (sectionId: string) => {
+    scrollToSection(sectionId);
+    setIsMobileMenuOpen(false);
   };
 
   const navItems = [
@@ -33,7 +33,10 @@ const Navigation = () => {
   ];
 
   return (
-    <nav
+    <motion.nav
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45 }}
       role="navigation"
       aria-label="Main navigation"
       className={cn(
@@ -47,7 +50,7 @@ const Navigation = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <button
-            onClick={() => scrollToSection("hero")}
+            onClick={() => handleSectionScroll("hero")}
             className="font-heading text-xl sm:text-2xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent hover:scale-105 transition-spring flex-shrink-0"
           >
             Dikshanta
@@ -58,8 +61,8 @@ const Navigation = () => {
             {navItems.map((item) => (
               <button
                 key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="text-muted-foreground hover:text-foreground transition-smooth relative group hover:scale-105"
+                onClick={() => handleSectionScroll(item.id)}
+                className="text-muted-foreground hover:text-foreground transition-smooth relative group hover:scale-105 nav-link-underline"
               >
                 {item.label}
                 <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-primary-glow scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
@@ -89,7 +92,7 @@ const Navigation = () => {
               {navItems.map((item, index) => (
                 <button
                   key={item.id}
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={() => handleSectionScroll(item.id)}
                   className="text-left text-muted-foreground hover:text-foreground transition-smooth py-3 px-2 rounded-md text-base sm:text-lg hover:scale-105 animate-slide-in-left"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
@@ -100,7 +103,7 @@ const Navigation = () => {
           </div>
         )}
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

@@ -74,7 +74,7 @@ const ProjectsSection = () => {
   const { setItemRef, visibleItems } = usePerItemFadeOnScroll(projects.length, { threshold: 0.2, rootMargin: "0px 0px -10% 0px" });
 
   return (
-    <section id="projects" className="relative py-32 overflow-hidden">
+    <section id="projects" data-scroll-section className="relative py-32 overflow-hidden">
       {/* Premium Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background/80 to-accent/10" />
       
@@ -124,7 +124,7 @@ const ProjectsSection = () => {
                 {/* Hover Glow Effect */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl" />
 
-                <Card className={`relative h-full overflow-hidden bg-card/60 backdrop-blur-xl border transition-all duration-500 group-hover:scale-[1.02] group-hover:-translate-y-2 ${
+                <Card className={`relative h-full overflow-hidden bg-card/60 backdrop-blur-xl border transition-all duration-500 group-hover:scale-[1.02] group-hover:-translate-y-2 card-tilt ${
                   project.featured 
                     ? 'border-primary/40 shadow-2xl shadow-primary/15' 
                     : 'border-border/50 shadow-lg'

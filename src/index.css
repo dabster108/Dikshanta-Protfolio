@@ -279,6 +279,53 @@
   .magnetic {
     transition: transform 0.2s ease-out;
   }
+
+  .interactive-button {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .interactive-button::after {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    background: radial-gradient(circle, hsl(var(--primary) / 0.35) 0%, transparent 60%);
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.4s ease, transform 0.45s ease;
+    z-index: -1;
+  }
+
+  .interactive-button:hover::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .nav-link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+  }
+
+  .nav-link-underline:hover::after {
+    transform: scaleX(1);
+  }
+
+  .card-tilt {
+    transform-style: preserve-3d;
+  }
+
+  .card-tilt:hover {
+    transform: perspective(1200px) rotateX(2.5deg) rotateY(-2.5deg) translateY(-4px);
+  }
   
   /* Custom scrollbar */
   ::-webkit-scrollbar {
@@ -307,6 +354,27 @@
   /* Focus styles */
   .focus-ring {
     @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background;
+  }
+}
+
+[data-scroll-container] {
+  min-height: 100vh;
+}
+
+.has-scroll-smooth body {
+  overflow: hidden;
+}
+
+.has-scroll-smooth [data-scroll-container] {
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
