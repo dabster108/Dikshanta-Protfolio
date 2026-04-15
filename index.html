@@ -1,94 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dikshanta Chapagain - Portfolio</title>
-    <meta name="description" content="AI/ML Enthusiast exploring the future of AI with modern portfolio showcasing innovative projects" />
-    <meta name="author" content="Dikshanta Chapagain" />
 
-    <!-- Force dark mode immediately - MUST be first to prevent FOUC -->
-    <script>
-      (function() {
-        try {
-          // Add dark class to html element immediately
-          document.documentElement.classList.add('dark');
-          
-          // Set localStorage to override any theme provider defaults
-          localStorage.setItem('portfolio-theme', 'dark');
-          
-          // Also set it as an attribute for additional safety
-          document.documentElement.setAttribute('data-theme', 'dark');
-        } catch (e) {
-          // Silent fail - fallback styles will handle it
-        }
-      })();
-    </script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dikshanta Chapagain - Portfolio</title>
+  <meta name="description"
+    content="AI/ML Enthusiast exploring the future of AI with modern portfolio showcasing innovative projects" />
+  <meta name="author" content="Dikshanta Chapagain" />
 
-    <!-- Inline fallback dark mode styles to prevent FOUC -->
-    <style>
-      html.dark, html[data-theme="dark"] {
-        color-scheme: dark;
+  <!-- Force dark mode immediately - MUST be first to prevent FOUC -->
+  <script>
+    (function () {
+      try {
+        // Add dark class to html element immediately
+        document.documentElement.classList.add('dark');
+
+        // Set localStorage to override any theme provider defaults
+        localStorage.setItem('portfolio-theme', 'dark');
+
+        // Also set it as an attribute for additional safety
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) {
+        // Silent fail - fallback styles will handle it
       }
-      
-      html.dark body, html[data-theme="dark"] body {
-        background-color: #0a0a0a;
-        color: #ffffff;
-      }
-      
-      html:not(.light) {
-        color-scheme: dark;
-      }
-      
-      html:not(.light) body {
-        background-color: #0a0a0a;
-        color: #ffffff;
-      }
-    </style>
+    })();
+  </script>
 
-    <!-- Favicon (all consistent) -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/hack.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/hack.png" />
-    <link rel="shortcut icon" href="/images/hack.png" />
+  <!-- Inline fallback dark mode styles to prevent FOUC -->
+  <style>
+    html.dark,
+    html[data-theme="dark"] {
+      color-scheme: dark;
+    }
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    html.dark body,
+    html[data-theme="dark"] body {
+      background-color: #0a0a0a;
+      color: #ffffff;
+    }
 
-    <!-- Tailwind CSS - Vite will handle the correct path in dev/prod -->
-    <link rel="stylesheet" href="/src/index.css" />
+    html:not(.light) {
+      color-scheme: dark;
+    }
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:title" content="Dikshanta Chapagain - Portfolio" />
-    <meta property="og:description" content="My personal portfolio showcasing projects, skills, and experience." />
-    <meta property="og:image" content="/images/banner.png" />
-    <meta property="og:url" content="https://da-dikshanta.vercel.app/" />
-    <meta property="og:type" content="website" />
+    html:not(.light) body {
+      background-color: #0a0a0a;
+      color: #ffffff;
+    }
+  </style>
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Dikshanta Chapagain - Portfolio" />
-    <meta name="twitter:description" content="My personal portfolio showcasing projects, skills, and experience." />
-    <meta name="twitter:image" content="/images/banner.png" />
+  <!-- Favicon (all consistent) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/frontend.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/frontend.png" />
+  <link rel="shortcut icon" href="/images/frontend.png" />
 
-    <!-- Remove Vercel preview banner -->
-    <script>
-      if (typeof window !== "undefined") {
-        const observer = new MutationObserver(() => {
-          const banner = document.getElementById("__vercel");
-          if (banner) banner.remove();
-        });
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
 
-        observer.observe(document.body, { childList: true, subtree: true });
-      }
-    </script>
-  </head>
+  <!-- Tailwind CSS - Vite will handle the correct path in dev/prod -->
+  <link rel="stylesheet" href="/src/index.css" />
 
-  <body>
-    <div id="root"></div>
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="Dikshanta Chapagain - Portfolio" />
+  <meta property="og:description" content="My personal portfolio showcasing projects, skills, and experience." />
+  <meta property="og:image" content="/images/banner.png" />
+  <meta property="og:url" content="https://da-dikshanta.vercel.app/" />
+  <meta property="og:type" content="website" />
 
-    <!-- React entry point -->
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Dikshanta Chapagain - Portfolio" />
+  <meta name="twitter:description" content="My personal portfolio showcasing projects, skills, and experience." />
+  <meta name="twitter:image" content="/images/banner.png" />
+
+  <!-- Remove Vercel preview banner -->
+  <script>
+    if (typeof window !== "undefined") {
+      const observer = new MutationObserver(() => {
+        const banner = document.getElementById("__vercel");
+        if (banner) banner.remove();
+      });
+
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <!-- React entry point -->
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
